@@ -31,22 +31,40 @@ def add_movies(json):
     coll.insert_many(json)
 
 def search_title(title):
-    pass
+    result = coll.find({"title": title})
+    print("All movies with title " + title)
+    for item in result:
+        print(item)
 
 def after_year(year):
-    pass
+    result = coll.find({"year": {'$gt':year}})
+    print("All movies after year " + year)
+    for item in result:
+        print(item)
 
 def director(director):
-    pass
+    result = coll.find({"director": director})
+    print("All movies directed by " + director)
+    for item in result:
+        print(item)
 
 def year(year):
-    pass
+    result = coll.find({"year": year})
+    print("All movies in year " + year)
+    for item in result:
+        print(item)
 
 def before_year(year):
-    pass
+    result = coll.find({"year": {'$lte':year}})
+    print("All movies made before " + year)
+    for item in result:
+        print(item)
 
 def genre_year(genre, year):
-    pass
+    result = coll.find({'$and': [{"genre": genre}, {'year':year}]})
+    print("All movies in genre " + genre + " made in year " + year)
+    for item in result:
+        print(item)
 
 movies = get_movies('https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json')
 add_movies(movies)
